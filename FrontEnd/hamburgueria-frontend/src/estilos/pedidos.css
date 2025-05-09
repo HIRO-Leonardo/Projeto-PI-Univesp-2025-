@@ -1,0 +1,17 @@
+.Mesas{
+    display: block;
+    align-content: center;
+    text-align: center;
+    color: blue;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+    
+}
+.Title{
+    display: block;
+    align-content: center;
+    text-align: center;
+    color: blue;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 22px;
+}

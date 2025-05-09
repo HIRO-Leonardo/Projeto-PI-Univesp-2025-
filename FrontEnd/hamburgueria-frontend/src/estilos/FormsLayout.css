@@ -1,0 +1,80 @@
+.forms-container {
+    display: flex; /* Coloca os filhos lado a lado */
+    flex-direction: row; /* Garante que a direção seja horizontal */
+    align-items: flex-start; /* Alinha os itens no topo */
+    gap: 20px; /* Espaçamento entre os formulários (ajuste conforme necessário) */
+    padding: 20px; /* Adiciona um pouco de espaçamento ao redor dos formulários */
+  }
+  
+  /* Estilos para o contêiner individual de cada formulário */
+  .forms-container > div { /* Aplica a todos os filhos diretos de forms-container */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 350px; /* Defina uma largura para cada formulário (ajuste conforme necessário) */
+  }
+  
+  /* Estilos para títulos dentro dos formulários */
+  .forms-container > div h3 {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center; /* Centraliza o título dentro de cada formulário */
+  }
+  
+  /* Estilos para grupos de campos (labels e inputs/selects) */
+  .forms-container > div .formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .forms-container > div .formGroup label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .forms-container > div .formGroup input,
+  .forms-container > div .formGroup select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .forms-container > div .button {
+    background-color: #007bff; /* Cor padrão para o botão */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .forms-container > div .button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo específico para o botão de cadastrar */
+  .forms-container > div:first-child .button {
+    background-color: #28a745;
+  }
+  
+  .forms-container > div:first-child .button:hover {
+    background-color: #1e7e34;
+  }
+  
+  /* Estilo específico para o botão de alterar disponibilidade (opcionalmente, pode usar a cor padrão) */
+  /* .forms-container > div:last-child .button {
+    background-color: #007bff;
+  }
+  
+  .forms-container > div:last-child .button:hover {
+    background-color: #0056b3;
+  } */
