@@ -1,0 +1,142 @@
+.containerPrincipal {
+  display: flex;
+  gap: 2rem; /* Espaçamento entre as colunas */
+}
+
+.coluna {
+  flex: 1; /* Faz as colunas ocuparem o mesmo espaço */
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formPedido {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.formGroup input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.botao {
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.botao:hover {
+  background-color: #0056b3;
+}
+
+.sucesso {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.erroCadastro {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+  border-bottom: 3px solid #007bff;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Espaçamento entre os itens */
+}
+
+.item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-left: 5px solid #007bff; /* Detalhe colorido na borda */
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.item:hover {
+  transform: translateY(-5px); /* Efeito de elevação */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.itemHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.itemNome {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.itemPreco {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #28a745; /* Cor verde para o preço */
+}
+
+.itemDescricao {
+  font-size: 1rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.loading, .erro, .semItens {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 2rem;
+}
+
+.erro {
+  color: #dc3545;
+  font-weight: bold;
+}

@@ -5,6 +5,7 @@ import CardapioAdmin from './CardapioAdmin';
 import EstoqueAdmin from './EstoqueAdmin';
 import HorarioFunc from './HorarioFunc';
 import Usuarios from './Usuarios';
+import RelatorioVendas from './relatorioVendas';
 
 function AdminDashboard() {
   return (
@@ -17,6 +18,7 @@ function AdminDashboard() {
         <Link to="/admin/estoque" className="bg-green-200 p-4 rounded shadow text-center">Estoque</Link>
         <Link to="/admin/horario" className="bg-indigo-200 p-4 rounded shadow text-center">Horário</Link>
         <Link to="/admin/usuarios" className="bg-red-200 p-4 rounded shadow text-center">Usuários</Link>
+         <Link to="/admin/RelatorioVendas" className="bg-red-200 p-4 rounded shadow text-center">Relatorio Vendas</Link>
       </nav>
 
       <Routes>
@@ -25,6 +27,7 @@ function AdminDashboard() {
         <Route path="estoque" element={<EstoqueAdmin />} />
         <Route path="horario" element={<HorarioFunc />} />
         <Route path="usuarios" element={<Usuarios />} />
+        <Route path="relatorioVendas" element={<RelatorioVendas />} />
       </Routes>
     </div>
   );

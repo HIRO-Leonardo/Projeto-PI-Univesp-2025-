@@ -7,6 +7,7 @@ import Estoque from './components/Estoque';
 import Cardapio from './components/Cardapio';
 import Caixa from './components/Caixa';
 import AdminDashboard from './admin/AdminDashboard';
+import NovoPedidoCardapio from './components/NovoPedidoCardapio';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Link>
           <Link to="/criar-pedido" className="bg-white shadow-md rounded p-4 text-center hover:bg-orange-100">
             <h2 className="font-bold text-orange-600">Novo Pedido</h2>
+          </Link>
+          <Link to="/pedidosCardapio" className="bg-white shadow-md rounded p-4 text-center hover:bg-gray-200">
+            <h2 className="font-bold text-gray-700">pedidos para Cardapio</h2>
           </Link>
           <Link to="/reservas" className="bg-white shadow-md rounded p-4 text-center hover:bg-yellow-100">
             <h2 className="font-bold text-yellow-600">Reservas</h2>
@@ -49,6 +53,7 @@ function App() {
           <Routes>
             <Route path="/pedidos" element={<Pedidos />} />
             <Route path="/criar-pedido" element={<NovoPedido />} />
+            <Route path="/pedidosCardapio" element={<NovoPedidoCardapio />} />
             <Route path="/reservas" element={<Reservas />} />
             <Route path="/estoque" element={<Estoque />} />
             <Route path="/cardapio" element={<Cardapio />} />

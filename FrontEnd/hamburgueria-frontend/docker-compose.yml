@@ -1,0 +1,24 @@
+services:
+
+  backend:
+    
+    image: userspringboot:1.0
+    
+    ports:
+      - "8080:8080"
+    
+    networks:
+      - app-network
+
+  frontend:
+    build: ./
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+
+networks:
+
+  app-network:
+    driver: bridge
