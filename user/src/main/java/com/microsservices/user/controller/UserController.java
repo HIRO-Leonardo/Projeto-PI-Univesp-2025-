@@ -29,6 +29,24 @@ public class UserController {
         this.userServices = userServices;
     }
 
+    // GetMapping
+
+    @GetMapping("/mesas")
+    public List<MesasDto> getAllMesas(){return userServices.getAllMesas();}
+
+    @GetMapping("/reservadas")
+    public List<MesasDto> verMesasReservadas(){return userServices.getAllMesasReservadas();}
+
+    @GetMapping("/pedidos")
+    public  List<PedidosDto> allPedidos(){return (List<PedidosDto>) userServices.verTodososPedidos();}
+
+    @GetMapping("/cardapio")
+    public List<CardapioDTO> getAllCardapio(){
+        return (List<CardapioDTO>) userServices.getAllCardapio();
+    }
+
+    // --------------------------------------------------------------
+    // PostMapping
 
     @PostMapping("/mesas")
     public ResponseEntity<MesaModels> cadastroMesa(@RequestBody @Valid  MesaModels mesaModels){
@@ -41,44 +59,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userServices.save(mesaModels1));
     }
 
-    @GetMapping("/mesas")
-    public List<MesasDto> getAllMesas(){
-
-        return userServices.getAllMesas();
-
-    }
-
-    @GetMapping("/reservadas")
-    public List<MesasDto> verMesasReservadas(){
-        return userServices.getAllMesasReservadas();
-
-    }
-
-    @GetMapping("/pedidos")
-    public  List<PedidosDto> allPedidos(){
-        return (List<PedidosDto>) userServices.verTodososPedidos();
-
-    }
-
     @PostMapping("/disp")
     public ResponseEntity<DispMesaModels> cadastroDisponibilidade(@RequestBody @Valid DispMesaModels dispMesaModels){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userServices.saveDisp(dispMesaModels));
     }
 
-    @PutMapping("/alterarDisponibilidade/{id}")
-    public ResponseEntity<?> alterarDisponibilidade(@PathVariable Long id){
-        userServices.atualizarDispMesa(id);
-
-        return ResponseEntity.ok("Atualizado com sucesso a disponibidaade da mesa.");
-
-    }
-
-
-
     @PostMapping("/reservar/{id}")
     public ResponseEntity<?> reservarMesas(@PathVariable Long id, @RequestBody PedidosModels pedidosModels){
-       Optional<MesaModels> mesaModelsOptional = Optional.ofNullable(userServices.findById(id));
+        Optional<MesaModels> mesaModelsOptional = Optional.ofNullable(userServices.findById(id));
 
         if (mesaModelsOptional.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -86,7 +75,6 @@ public class UserController {
 
         MesaModels mesasDto = mesaModelsOptional.get();
 
-        DispMesaModels dispMesaModels = userServices.findByIdInt(Long.valueOf(2));
         Integer disponibilidadeMesa = mesasDto.getDispMesa();
         Long idMesa = mesasDto.getIdMesa();
 
@@ -120,10 +108,24 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userServices.save(cardapioDTO));
 
     }
-    @GetMapping("/cardapio")
-    public List<CardapioDTO> getAllCardapio(){
-        return (List<CardapioDTO>) userServices.getAllCardapio();
+
+    @PostMapping("/pedido-cardapio")
+    public ResponseEntity<PedidosCardapioDTO> savePediddosCardapio(@RequestBody PedidosCardapioDTO pedidosCardapioDTO){
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userServices.savePedidosCardapio(pedidosCardapioDTO));
     }
+
+    //---------------------------------------------
+    //PutMapping
+
+    @PutMapping("/alterarDisponibilidade/{id}")
+    public ResponseEntity<?> alterarDisponibilidade(@PathVariable Long id){
+        userServices.atualizarDispMesa(id);
+        return ResponseEntity.ok("Atualizado com sucesso a disponibidaade da mesa.");
+    }
+
+    //-----------------------------------------------
+    //DeleteMapping
 
     @DeleteMapping("/cardapio/{id}")
     public ResponseEntity<Void> deleteCardapio(@PathVariable Long id){
@@ -132,22 +134,5 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/pedido-cardapio")
-    public ResponseEntity<PedidosCardapioDTO> savePediddosCardapio(@RequestBody PedidosCardapioDTO pedidosCardapioDTO){
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(userServices.savePedidosCardapio(pedidosCardapioDTO));
-    }
-
-    @GetMapping("/pedido-cardapio")
-    public List<PedidosCardapioDTO> getAllPedidosCardapio(){
-        return (List<PedidosCardapioDTO>) userServices.getAllCardapioPedidos();
-    }
-
-    @GetMapping("/relatorio")
-    public List<RelatorioVendasDTO> getRelatorioQuantidade(){
-        return (List<RelatorioVendasDTO>) userServices.getRelatorioQuantidade();
-    }
-
-
-
+    //----------------------------------------------------------
 }

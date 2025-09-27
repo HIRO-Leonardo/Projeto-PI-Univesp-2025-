@@ -37,6 +37,8 @@ public class UserServices {
     @Autowired
     private RelatorioVendasRepository relatorioVendasRepository;
 
+
+    //MesaModels/MesasDTO/DispMesaModels
     public MesaModels save(MesaModels mesaModels){
         mesaModels = mesaRepository.save(mesaModels);
         return mesaModels;
@@ -72,18 +74,6 @@ public class UserServices {
     }
 
     @Transactional
-    public List<PedidosDto> verTodososPedidos(){
-        var result = pedidoRepository.findAll();
-        List<PedidosDto> pedidosDto = result.stream().map(x -> {
-
-            return new PedidosDto(x);
-        }).toList();
-
-        return  pedidosDto;
-
-    }
-
-    @Transactional
     public MesaModels atualizarDispMesa(Long id){
         MesaModels mesaModels = mesaRepository.findById(id).get();
         if (mesaModels.getDispMesa() == 2){
@@ -97,7 +87,6 @@ public class UserServices {
         return mesaModels;
 
     }
-
 
     @Transactional(readOnly = true)
     public List<MesasDto> getAllMesas(){
@@ -144,15 +133,23 @@ public class UserServices {
         }
 
     }
+    //-------------------------------------------------------------------------
+    //PedidosModels
+    @Transactional
+    public List<PedidosDto> verTodososPedidos(){
+        var result = pedidoRepository.findAll();
+        List<PedidosDto> pedidosDto = result.stream().map(x -> {
 
+            return new PedidosDto(x);
+        }).toList();
 
+        return  pedidosDto;
+
+    }
     @Transactional
     public PedidosModels pedidosMesas(PedidosModels pedidosModels){
         LocalDateTime horaMarcada = pedidosModels.getHoradia_marcada();
         Integer horasOcupacao = pedidosModels.getHoras_ocupacao();
-        
-
-
 
         if (horaMarcada != null && horasOcupacao != null) {
             LocalDateTime horaFimOcupacao = horaMarcada.plusHours(horasOcupacao);
@@ -160,8 +157,9 @@ public class UserServices {
         }
             pedidosModels = pedidoRepository.save(pedidosModels);
             return pedidosModels;
-
     }
+    //----------------------------------------------------------------
+    //CardapioModels/CardapiosDtos
     @Transactional
     public CardapioDTO save(CardapioDTO cardapioDTO){
         var cardapioModels = new CardapioModels();
@@ -197,7 +195,8 @@ public class UserServices {
         }
 
     }
-
+    //------------------------------------------------------------
+    //PedidosCardapiosModels
     @Transactional
     public PedidosCardapioDTO savePedidosCardapio(PedidosCardapioDTO pedidosCardapioDTO){
         var pedidosModels = new PedidosCardapioModels();
@@ -227,9 +226,5 @@ public class UserServices {
         return quantidadeTotalVendidaPorProduto;
 
     }
-
-
-
-
-
+    //---------------------------------------------------------------
 }
