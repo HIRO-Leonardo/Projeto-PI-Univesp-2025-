@@ -1,5 +1,7 @@
 package com.microsservices.user.services;
 
+import com.microsservices.user.ExceptionsEvents.EventNoSuchElementException;
+import com.microsservices.user.ExceptionsEvents.EventNotFoundException;
 import com.microsservices.user.dtos.*;
 import com.microsservices.user.models.*;
 import com.microsservices.user.repository.*;
@@ -158,6 +160,12 @@ public class UserServices {
             pedidosModels = pedidoRepository.save(pedidosModels);
             return pedidosModels;
     }
+
+    public Optional<PedidosModels> getPedidoById(Long id){
+       Optional<PedidosModels> pedidosModels = Optional.ofNullable(pedidoRepository.findById(id).orElseThrow(() -> new EventNotFoundException()));
+        return pedidosModels;
+    }
+
     //----------------------------------------------------------------
     //CardapioModels/CardapiosDtos
     @Transactional
@@ -227,4 +235,6 @@ public class UserServices {
 
     }
     //---------------------------------------------------------------
+
+
 }

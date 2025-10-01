@@ -3,11 +3,9 @@ package com.microsservices.user.controller;
 import com.microsservices.user.dtos.*;
 import com.microsservices.user.models.DispMesaModels;
 import com.microsservices.user.models.MesaModels;
-import com.microsservices.user.models.PedidosCardapioModels;
 import com.microsservices.user.models.PedidosModels;
 import com.microsservices.user.services.UserServices;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +43,16 @@ public class UserController {
         return (List<CardapioDTO>) userServices.getAllCardapio();
     }
 
+    @GetMapping("/pedido/{id}")
+    public ResponseEntity<?> getPedidosById(@PathVariable Long id){
+        Optional<PedidosModels> pedidosModels = userServices.getPedidoById(id);
+        return ResponseEntity.ok(pedidosModels);
+    }
+
+    @GetMapping("/pedido-cardapio")
+    public List<PedidosCardapioDTO> getAllPedidoCardapio(){
+        return (List<PedidosCardapioDTO>) userServices.getAllCardapioPedidos();
+    }
     // --------------------------------------------------------------
     // PostMapping
 
