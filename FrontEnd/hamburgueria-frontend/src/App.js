@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Pedidos from './components/Pedidos';
 import NovoPedido from './components/NovoPedido';
 import Reservas from './components/Reservas';
-import Estoque from './components/Estoque';
+
 import Cardapio from './components/Cardapio';
 import Caixa from './components/Caixa';
 import AdminDashboard from './admin/AdminDashboard';
 import NovoPedidoCardapio from './components/NovoPedidoCardapio';
-
+import LoginPage from './components/Login';
+import RegisterPage from './components/Register';
 function App() {
   return (
     <Router>
@@ -35,9 +36,6 @@ function App() {
           <Link to="/reservas" className="bg-white shadow-md rounded p-4 text-center hover:bg-yellow-100">
             <h2 className="font-bold text-yellow-600">Reservas</h2>
           </Link>
-          <Link to="/estoque" className="bg-white shadow-md rounded p-4 text-center hover:bg-green-100">
-            <h2 className="font-bold text-green-600">Estoque</h2>
-          </Link>
           <Link to="/cardapio" className="bg-white shadow-md rounded p-4 text-center hover:bg-blue-100">
             <h2 className="font-bold text-blue-600">Cardápio</h2>
           </Link>
@@ -47,6 +45,12 @@ function App() {
           <Link to="/admin" className="bg-white shadow-md rounded p-4 text-center hover:bg-gray-200">
             <h2 className="font-bold text-gray-700">Admin</h2>
           </Link>
+          <Link to="/Login" className="bg-white shadow-md rounded p-4 text-center hover:bg-gray-200">
+            <h2 className="font-bold text-gray-700">Login</h2>
+          </Link>
+           <Link to="/Register" className="bg-white shadow-md rounded p-4 text-center hover:bg-gray-200">
+            <h2 className="font-bold text-gray-700">Registro</h2>
+          </Link>
         </nav>
 
         <main className="w-full">
@@ -55,10 +59,13 @@ function App() {
             <Route path="/criar-pedido" element={<NovoPedido />} />
             <Route path="/pedidosCardapio" element={<NovoPedidoCardapio />} />
             <Route path="/reservas" element={<Reservas />} />
-            <Route path="/estoque" element={<Estoque />} />
+            
             <Route path="/cardapio" element={<Cardapio />} />
             <Route path="/caixa" element={<Caixa />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
+            <Route path="/Login" element={<LoginPage />} />
+            <Route path="/Register" element={<RegisterPage />} />
+            <Route path="*" element={<div className="text-center text-gray-600">Selecione uma opção do menu acima.</div>} />
           </Routes>
         </main>
       </div>

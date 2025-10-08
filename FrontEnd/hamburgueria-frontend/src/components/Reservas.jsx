@@ -15,6 +15,7 @@ const Reservas = () => {
   const [erro, setErro] = useState('');
   const [telefoneCliente, setTelefoneCliente] = useState('');
   const [emailCliente, setEmailCliente] = useState('');
+  const [authError, setAuthError] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMensagem('');
@@ -42,6 +43,13 @@ const Reservas = () => {
       setTelefoneCliente('');
       setEmailCliente('');
     } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
       console.error('Erro ao cadastrar reserva:', error);
       setErro('Erro ao cadastrar a reserva. Por favor, tente novamente.');
       if (error.response && error.response.data) {
@@ -56,6 +64,13 @@ const Reservas = () => {
         setReservas(response.data);
       })
       .catch(error => {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
         console.error('Erro ao buscar reservas:', error);
       });
 

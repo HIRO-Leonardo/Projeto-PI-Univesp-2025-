@@ -1,91 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import api from '../services/api';
-import './Cardapio.css';
+import React, { useState, useEffect } from 'react';
+import api from '../services/api'; // Certifique-se de que o caminho de importação está correto!
 
-const Cardapio = () => {
-  const [cardapio, setCardapio] = useState([]);
+function CardapioCompleto() {
+    // 1. Estados para gerenciar a UI e os dados
+    const [cardapio, setCardapio] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchCardapio = async () => {
-      try {
-        const response = await api.get('/api/cardapio/cardapio/');
-        console.log('Dados do cardápio recebidos:', response.data);
+    // 2. Hook useEffect para buscar dados na montagem do componente
+    useEffect(() => {
+        const fetchCardapio = async () => {
+            try {
+                // Requisição GET para o endpoint /cardapio
+                const response = await api.get('/cardapio'); 
+                
+                // Sucesso: armazena os dados
+                setCardapio(response.data); 
+                setError(null);
 
-        // Agrupar itens por categoria
-        const agrupado = response.data.reduce((acc, item) => {
-          const categoria = item.categoria || 'Outros'; // Use 'Outros' como fallback
-          if (!acc[categoria]) acc[categoria] = [];
-          acc[categoria].push(item);
-          return acc;
-        }, {});
+            } catch (err) {
+                console.error("Erro ao carregar cardápio:", err);
+                // Trata o erro (404, 500, ou falha de rede)
+                setError("Não foi possível carregar os itens do cardápio. Tente novamente.");
+            } finally {
+                // Define loading como falso, independentemente do sucesso ou falha
+                setLoading(false);
+            }
+        };
 
-        // Ordem personalizada das categorias
-        const ordemCategorias = [
-          'PORÇOES',
-          'CLASSICOS DE CARNE',
-          'CLASSICOS DE RUCULA',
-          'CLASSICOS DE PICANHA',
-          'CLASSICOS DE COSTELA',
-          'CLASSICOS DE FRANGO',
-          'CLASSICOS DE CALABRESA',
-          'CLASSICOS RECHEADOS',
-          'ESPECIAIS',
-          'SEM CARNE',
-          'EXTRAS',
-          'BEBIDAS',
-          'CERVEJA',
-          'VINHOS',
-          'PARA DEPOIS',
-        ];
+        fetchCardapio();
+    }, []); // O array vazio [] garante que a função só roda uma vez (na montagem)
 
-        // Reordenar categorias
-        const cardapioOrdenado = {};
-        ordemCategorias.forEach((categoria) => {
-          if (agrupado[categoria]) {
-            cardapioOrdenado[categoria] = agrupado[categoria];
-          }
-        });
+    // 3. Lógica de Renderização Condicional
 
-        setCardapio(cardapioOrdenado);
-      } catch (error) {
-        console.error('Erro ao carregar o cardápio:', error);
-      }
-    };
+    // Exibe o estado de carregamento
+    if (loading) {
+        return (
+            <div style={styles.card}>
+                <h2 style={styles.header}>CARDÁPIO COMPLETO</h2>
+                <p>Carregando cardápio...</p>
+            </div>
+        );
+    }
+    
+    // Exibe mensagem de erro
+    if (error) {
+        return (
+            <div style={styles.card}>
+                <h2 style={styles.header}>CARDÁPIO COMPLETO</h2>
+                <p style={{ color: 'red' }}>Erro: {error}</p>
+            </div>
+        );
+    }
 
-    fetchCardapio();
-  }, []);
+    // Exibe o cardápio completo
+    return (
+        <div style={styles.card}>
+            <h2 style={styles.header}>CARDÁPIO COMPLETO</h2>
+            
+            {cardapio.length === 0 ? (
+                <p>O cardápio está vazio.</p>
+            ) : (
+                <ul style={styles.list}>
+                    {cardapio.map((item) => (
+                        <li key={item.id} style={styles.listItem}>
+                            <div style={styles.itemTitle}>{item.nomeCardapioDTO}</div>
+                            <div style={styles.itemPrice}>R$ {item.precoCardapio.toFixed(2)}</div>
+                            <div style={styles.itemDescription}>{item.descricaoDoCardapio}</div>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+}
 
-  return (
-    <div className="cardapio-container">
-      <h1 className="cardapio-titulo">CARDÁPIO COMPLETO</h1>
-      {Object.entries(cardapio).length > 0 ? (
-        Object.entries(cardapio).map(([categoria, itens]) => (
-          <div key={categoria} className="categoria-container">
-            <h2 className="categoria-titulo">{categoria}</h2>
-            <ul className="cardapio-lista">
-              {itens.map((item) => (
-                <li key={item.id} className="cardapio-item">
-                  <div className="item-detalhes">
-                    <span className="item-nome">{item.nome}</span>
-                    <span className="item-preco">
-                      R$ {isNaN(Number(item.preco)) ? '' : Number(item.preco).toFixed(2)}
-                    </span>
-                  </div>
-                  {item.descricao &&
-                    item.descricao.trim().toLowerCase() !== 'nan' &&
-                    item.descricao.trim() !== '' && (
-                      <p className="item-descricao">{item.descricao}</p>
-                    )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      ) : (
-        <p className="cardapio-carregando">Carregando cardápio...</p>
-      )}
-    </div>
-  );
+// 4. Estilos (Para replicar o visual da sua imagem)
+const styles = {
+    card: {
+        padding: '20px',
+        maxWidth: '600px',
+        margin: '50px auto',
+        backgroundColor: 'white',
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+        textAlign: 'center',
+    },
+    header: {
+        fontSize: '24px',
+        paddingBottom: '10px',
+        borderBottom: '1px solid #eee',
+        marginBottom: '20px',
+    },
+    list: {
+        listStyle: 'none',
+        padding: 0,
+    },
+    listItem: {
+        borderBottom: '1px dotted #ccc',
+        padding: '10px 0',
+        textAlign: 'left',
+    },
+    itemTitle: {
+        fontWeight: 'bold',
+        fontSize: '1.1em',
+    },
+    itemPrice: {
+        float: 'right',
+        fontWeight: 'bold',
+        color: '#007bff',
+    },
+    itemDescription: {
+        fontSize: '0.9em',
+        color: '#666',
+    },
 };
 
-export default Cardapio;
+export default CardapioCompleto;

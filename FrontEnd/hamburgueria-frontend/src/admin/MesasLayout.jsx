@@ -10,6 +10,7 @@ const AlterarDisponibilidadeMesa = () => {
   const [novaDisponibilidade, setNovaDisponibilidade] = useState('1');
   const [mensagemAlterar, setMensagemAlterar] = useState('');
   const [erroAlterar, setErroAlterar] = useState('');
+  const [authError, setAuthError] = useState(false);
 
   const handleAlterarDisponibilidade = async (event) => {
     event.preventDefault();
@@ -27,6 +28,13 @@ const AlterarDisponibilidadeMesa = () => {
       setNovaDisponibilidade('1');
       console.log('Resposta do backend (alterar):', response.data);
     } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
       console.error(`Erro ao alterar disponibilidade da mesa ${idMesaAlterar}:`, error);
       setErroAlterar(`Erro ao alterar disponibilidade da mesa ${idMesaAlterar}. Por favor, tente novamente.`);
       if (error.response && error.response.data) {

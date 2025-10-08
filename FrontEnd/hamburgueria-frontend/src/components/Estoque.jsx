@@ -6,13 +6,20 @@ const Estoque = () => {
   const [estoque, setEstoque] = useState([]);
   const [filtroStatus, setFiltroStatus] = useState('Todos');
   const [filtroCategoria, setFiltroCategoria] = useState('Todas');
-
+  const [authError, setAuthError] = useState(false);
   const buscarEstoque = async () => {
     try {
       const response = await api.get('/api/estoque/');
       console.log('Dados do estoque recebidos:', response.data);
       setEstoque(response.data);
     } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
       console.error('Erro ao buscar estoque:', error);
     }
   };

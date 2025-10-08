@@ -11,7 +11,7 @@ const FormularioPedidos = () => {
   const [metodoPagamento, setMetodoPagamento] = useState('PIX');
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState('');
-
+  const [authError, setAuthError] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMensagem('');
@@ -31,6 +31,13 @@ const FormularioPedidos = () => {
       setMetodoPagamento('PIX');
       console.log('Resposta do servidor:', response.data);
     } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
       console.error('Erro ao enviar pedido:', error);
       setErro('Erro ao enviar pedido. Verifique os dados e tente novamente.');
     }

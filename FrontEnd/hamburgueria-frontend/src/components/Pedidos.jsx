@@ -8,7 +8,7 @@ import '../estilos/pedidos.css'
 
 const Pedidos = () => {
   const [pedidos, setPedidos] = useState([]);
-
+const [authError, setAuthError] = useState(false);
   useEffect(() => {
     api.get('/pedidos') // Altere para a rota real
       .then(response => {
@@ -16,6 +16,13 @@ const Pedidos = () => {
         setPedidos(response.data);
       })
       .catch(error => {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
         console.error('Erro ao buscar pedidos:', error);
       });
   }, []);

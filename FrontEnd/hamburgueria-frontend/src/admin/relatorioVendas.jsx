@@ -6,7 +6,7 @@ const RelatorioVendas = () => {
   const [somaTotalQuantidade, setSomaTotalQuantidade] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [erro, setErro] = useState(null);
-
+  const [authError, setAuthError] = useState(false);
   useEffect(() => {
     const fetchRelatorio = async () => {
       try {
@@ -24,6 +24,13 @@ const RelatorioVendas = () => {
         
         setIsLoading(false);
       } catch (error) {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
         console.error('Erro ao buscar a quantidade total:', error);
         setErro('Não foi possível carregar o total vendido.');
         setIsLoading(false);

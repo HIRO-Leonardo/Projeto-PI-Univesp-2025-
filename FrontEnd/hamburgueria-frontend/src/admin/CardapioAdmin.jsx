@@ -7,7 +7,7 @@ const Cardapio = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [erro, setErro] = useState(null);
-
+    const [authError, setAuthError] = useState(false);
   // Estados para o formulário de cadastro de pedidos
   const [pedido, setPedido] = useState({
     nomeCliente: '',
@@ -25,6 +25,13 @@ const Cardapio = () => {
         setMenuItems(response.data);
         setIsLoading(false);
       } catch (error) {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
         console.error('Erro ao buscar o cardápio:', error);
         setErro('Não foi possível carregar o cardápio. Por favor, tente novamente.');
         setIsLoading(false);
@@ -64,6 +71,13 @@ const Cardapio = () => {
       });
 
     } catch (error) {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
       console.error('Erro ao cadastrar o pedido:', error);
       setErroCadastro('Ocorreu um erro ao cadastrar o pedido. Verifique os dados e tente novamente.');
     }

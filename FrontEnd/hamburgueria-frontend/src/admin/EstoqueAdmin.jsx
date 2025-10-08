@@ -8,6 +8,7 @@ const CadastroItemEstoque = () => {
   const [quantidade, setQuantidade] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState('');
+  const [authError, setAuthError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,6 +26,13 @@ const CadastroItemEstoque = () => {
       setNomeItem('');
       setQuantidade('');
     } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
       console.error('Erro ao cadastrar item:', error);
       setErro('Erro ao cadastrar o item. Tente novamente.');
     }

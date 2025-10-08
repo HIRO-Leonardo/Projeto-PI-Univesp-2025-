@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000/", "http://192.168.1.132:3000/"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://192.168.1.132:3000"})
 
 public class UserController {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

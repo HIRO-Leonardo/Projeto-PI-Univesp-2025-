@@ -11,7 +11,7 @@ const NovoPedido = () => {
   const [retirada, setRetirada] = useState(false);
   const [nomeCliente, setNomeCliente] = useState('');
   const [observacoes, setObservacoes] = useState('');
-
+  const [authError, setAuthError] = useState(false);
   const baseURL = 'http://localhost:8000';
 
   const categoriasOrdenadas = [
@@ -38,6 +38,13 @@ const NovoPedido = () => {
         const response = await axios.get(`${baseURL}/api/cardapio/cardapio/`);
         setMenuItems(response.data);
       } catch (error) {
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setAuthError(true);
+                    // Lógica de logout obrigatória aqui
+                    localStorage.removeItem('jwtToken');
+                } else {
+                    console.error('Erro ao buscar pedidos:', error);
+                }
         console.error('Erro ao carregar o cardápio:', error);
       }
     };
