@@ -53,11 +53,11 @@ function LoginPage() {
 
     return (
         <div style={{ padding: '20px', border: '1px solid #ccc', maxWidth: '400px', margin: '50px auto' }}>
-            <h2>Login com Spring JWT</h2>
+            <h2>Login:</h2>
             <form onSubmit={handleLogin}>
                  {/* ... Seus inputs e JSX ... */}
                  <div style={{ marginBottom: '15px' }}>
-                    <label>Usuário:</label>
+                    <label>E-mail:</label>
                     <input
                         type="text"
                         value={email}

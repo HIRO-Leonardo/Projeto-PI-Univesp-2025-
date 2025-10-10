@@ -43,6 +43,8 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.GET, "/mesas").permitAll()
                             .requestMatchers(HttpMethod.POST, "/mesas").permitAll()
                             .requestMatchers("/h2-console/**").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/estoque").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/estoque").permitAll()
                             .anyRequest().authenticated())
                     .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                     .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))

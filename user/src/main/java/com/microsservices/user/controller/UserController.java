@@ -53,13 +53,23 @@ public class UserController {
     public List<PedidosCardapioDTO> getAllPedidoCardapio(){
         return (List<PedidosCardapioDTO>) userServices.getAllCardapioPedidos();
     }
+
+    @GetMapping("/relatorio")
+    public List<RelatorioVendasDTO> relatorio(){
+        return (List<RelatorioVendasDTO>) userServices.getRelatorioQuantidade();
+    }
+
+    @GetMapping("/estoque")
+    public List<EstoqueDTO> estoqueGetAll(){
+        return (List<EstoqueDTO>) userServices.getAllEstoque();
+    }
+
     // --------------------------------------------------------------
     // PostMapping
 
     @PostMapping("/mesas")
     public ResponseEntity<MesaModels> cadastroMesa(@RequestBody @Valid  MesaModels mesaModels){
         MesaModels mesaModels1 = new MesaModels();
-
         mesaModels1.setDescMesa(mesaModels.getDescMesa());
         mesaModels1.setDispMesa(mesaModels.getDispMesa());
         mesaModels1.setCapacidade(mesaModels.getCapacidade());
@@ -69,7 +79,6 @@ public class UserController {
 
     @PostMapping("/disp")
     public ResponseEntity<DispMesaModels> cadastroDisponibilidade(@RequestBody @Valid DispMesaModels dispMesaModels){
-
         return ResponseEntity.status(HttpStatus.CREATED).body(userServices.saveDisp(dispMesaModels));
     }
 
@@ -112,15 +121,17 @@ public class UserController {
     }
     @PostMapping("/cardapio")
     public ResponseEntity<CardapioDTO> cadastrarCardapio(@RequestBody CardapioDTO cardapioDTO){
-
         return ResponseEntity.status(HttpStatus.CREATED).body(userServices.save(cardapioDTO));
-
     }
 
     @PostMapping("/pedido-cardapio")
     public ResponseEntity<PedidosCardapioDTO> savePediddosCardapio(@RequestBody PedidosCardapioDTO pedidosCardapioDTO){
-
         return ResponseEntity.status(HttpStatus.CREATED).body(userServices.savePedidosCardapio(pedidosCardapioDTO));
+    }
+
+    @PostMapping("/estoque")
+    public ResponseEntity<EstoqueDTO> cadastroEstoque(@RequestBody EstoqueDTO estoqueDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userServices.saveEstoque(estoqueDTO));
     }
 
     //---------------------------------------------
